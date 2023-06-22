@@ -173,11 +173,7 @@ function insertItem(arr, item, index) {
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'a', 'b', 'c' ]
  */
 function getHead(arr, n) {
-  const newArr = arr.filter((item, index) => {
-    if (index < n) {
-      return item;
-    }
-  });
+  const newArr = arr.filter((item, index) => index < n);
   return newArr;
 }
 
@@ -256,8 +252,12 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-  const newArr = arr.map((sum = 0, n => sum += n));
-  return newArr;
+  let sum = 0;
+  return arr.reduce((acc, value) => {
+    sum += value;
+    acc.push(sum);
+    return acc;
+  }, []);
 }
 
 /**
@@ -272,9 +272,7 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-  const newArr = arr.filter((item, index) => {
-    return index % 2 !== 0;
-  });
+  const newArr = arr.filter((item, index) => index % 2 !== 0);
   return newArr;
 }
 
@@ -518,13 +516,13 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  const ind = Math.abs(end - start + 1);
-  const array = new Array(ind).fill(0);
-  return array.map((item, index) => {
-    if (index < ind) {
-      ++start;
-      return start - 1;
-    }
+  const length = start < 0 ? (-1 * start + end + 1) : (end - start + 1);
+  const result = new Array(length);
+  result.fill(0);
+  let value = start - 1;
+  return result.map(() => {
+    value += 1;
+    return value;
   });
 }
 

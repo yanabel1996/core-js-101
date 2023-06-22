@@ -28,15 +28,12 @@
  *
  */
 function getFizzBuzz(num) {
-  if (num % 3 === 0 && num % 5 !== 0) {
-    return 'Fizz';
-  } else if (num % 3 !== 0 && num % 5 === 0) {
-    return 'Buzz';
-  } else if (num % 3 === 0 && num % 5 === 0) {
-    return 'FizzBuzz';
-  } else {
-    return num;
-  }
+  let res = '';
+  if (num % 3 === 0 && num % 5 !== 0) res = 'Fizz';
+  else if (num % 3 !== 0 && num % 5 === 0) res = 'Buzz';
+  else if (num % 3 === 0 && num % 5 === 0) res = 'FizzBuzz';
+  else res = num;
+  return res;
 }
 
 
@@ -53,9 +50,10 @@ function getFizzBuzz(num) {
  */
 function getFactorial(n) {
   let mult = 1;
-  while (n) {
-    mult = mult * n;
-    n = n - 1;
+  let p = n;
+  while (p) {
+    mult *= p;
+    p -= 1;
   }
   return mult;
 }
@@ -75,9 +73,10 @@ function getFactorial(n) {
  */
 function getSumBetweenNumbers(n1, n2) {
   let sum = 0;
-  while (n1 <= n2) {
-    sum = sum + n1;
-    n1++;
+  let p = n1;
+  while (p <= n2) {
+    sum += p;
+    p += 1;
   }
   return sum;
 }
@@ -99,11 +98,10 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a, b, c) {
-  if (a < b + c && b < a + c && c < a + b) {
-    return true;
-  } else {
-    return false;
-  }
+  let res = '';
+  if (a < b + c && b < a + c && c < a + b) res = true;
+  else res = false;
+  return res;
 }
 
 
@@ -280,9 +278,10 @@ function reverseString(str) {
  */
 function reverseInteger(num) {
   let str = '';
-  while (num) {
-    str = str + (num % 10);
-    num = Math.floor(num / 10);
+  let p = num;
+  while (p) {
+    str += p % 10;
+    p = Math.floor(p / 10);
   }
   return Number(str);
 }
@@ -507,14 +506,15 @@ function getMatrixProduct(m1, m2) {
   if (m2Len !== m1Wigth) {
     throw new Error('number of columns in the first matrix should be the same as the number of rows in the second');
   }
-  const productRow = Array.apply(null, new Array(m2Wigth)).map(Number.prototype.valueOf, 0);
+  const productRow = new Array(...new Array(m2Wigth))
+    .map(Number.prototype.valueOf, 0);
   const product = new Array(m1Len);
-  for (let p = 0; p < m1Len; p++) {
+  for (let p = 0; p < m1Len; p += 1) {
     product[p] = productRow.slice();
   }
-  for (let i = 0; i < m1Len; i++) {
-    for (let j = 0; j < m2Wigth; j++) {
-      for (let k = 0; k < m1Wigth; k++) {
+  for (let i = 0; i < m1Len; i += 1) {
+    for (let j = 0; j < m2Wigth; j += 1) {
+      for (let k = 0; k < m1Wigth; k += 1) {
         product[i][j] += m1[i][k] * m2[k][j];
       }
     }
@@ -556,9 +556,10 @@ function getMatrixProduct(m1, m2) {
 function evaluateTicTacToePosition(position) {
   const winnerO = '0';
   const winnerX = 'X';
+  let winner = '';
   const newPosition = [];
-  for (let i = 0; i < position.length; i++) {
-    for (let j = 0; j < position[0].length; j++) {
+  for (let i = 0; i < position.length; i += 1) {
+    for (let j = 0; j < position[0].length; j += 1) {
       if (position[i].length < 3) {
         while (position[i].length !== 3) {
           position[i].push(undefined);
@@ -567,27 +568,22 @@ function evaluateTicTacToePosition(position) {
       newPosition.push(position[i][j]);
     }
   }
-  const win = new Array(new Array(0, 1, 2),
-    new Array(3, 4, 5),
-    new Array(6, 7, 8),
-    new Array(0, 3, 6),
-    new Array(1, 4, 7),
-    new Array(2, 5, 8),
-    new Array(0, 4, 8),
-    new Array(2, 4, 6));
+  const win = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]];
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 8; i += 1) {
     if (newPosition[win[i][0]] === winnerO
       && newPosition[win[i][1]] === winnerO
       && newPosition[win[i][2]] === winnerO) {
-      return winnerO;
+      winner = winnerO;
     } else if (newPosition[win[i][0]] === winnerX
       && newPosition[win[i][1]] === winnerX
       && newPosition[win[i][2]] === winnerX) {
-      return winnerX;
+      winner = winnerX;
     }
   }
-  return undefined;
+  // eslint-disable-next-line
+  return winner ? winner : undefined;
 }
 
 

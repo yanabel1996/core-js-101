@@ -71,7 +71,7 @@ function getPolynom(...args) {
   const arg = [...args].reverse();
   function solvePOlynom(x) {
     let result = arg[0];
-    for (let i = 1; i < arg.length; i++) {
+    for (let i = 1; i < arg.length; i += 1) {
       result += arg[i] * (x ** i);
     }
     return result;
@@ -95,16 +95,15 @@ function getPolynom(...args) {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-  const memory = new Map();
-  return function (arg) {
-    if (memory.has(arg)) {
-      return memory.get(arg);
-    } else {
-      let result = func(arg);
-      memory.set(arg, result);
-      return result;
-    }
-  };
+  let IsMemoize = false;
+  let result = 0;
+  function memFunc() {
+    if (IsMemoize) return result;
+    result = func();
+    IsMemoize = true;
+    return result;
+  }
+  return memFunc;
 }
 
 
@@ -213,7 +212,7 @@ function getIdGeneratorFunction(startFrom) {
   let start = startFrom;
   let isStart = false;
   return function f() {
-    if (isStart) start++;
+    if (isStart) start += 1;
     else isStart = true;
     return start;
   };
