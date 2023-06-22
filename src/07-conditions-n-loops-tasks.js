@@ -556,7 +556,7 @@ function getMatrixProduct(m1, m2) {
 function evaluateTicTacToePosition(position) {
   const winnerO = '0';
   const winnerX = 'X';
-  let winner = '';
+  let winner;
   const newPosition = [];
   for (let i = 0; i < position.length; i += 1) {
     for (let j = 0; j < position[0].length; j += 1) {
@@ -582,8 +582,7 @@ function evaluateTicTacToePosition(position) {
       winner = winnerX;
     }
   }
-  // eslint-disable-next-line
-  return winner ? winner : undefined;
+  return winner;
 }
 
 
